@@ -15,32 +15,42 @@ export function CodeEditor({
   value,
   onChange,
   language = "javascript",
-  height = "300px",
   className,
 }: CodeEditorProps) {
   const [mounted, setMounted] = useState(false);
-  const editorRef = useRef(null);
-  
-  // Normalize language for Monaco editor
+  const [editorHeight, setEditorHeight] = useState("200px");
+  const editorRef = useRef<any>(null);
+
   const normalizedLanguage = language.toLowerCase();
-  const monacoLanguage = 
-    normalizedLanguage === "c#" ? "csharp" : 
-    normalizedLanguage === "c++" ? "cpp" :
-    normalizedLanguage;
+  const monacoLanguage =
+    normalizedLanguage === "c#"
+      ? "csharp"
+      : normalizedLanguage === "c++"
+      ? "cpp"
+      : normalizedLanguage;
 
   useEffect(() => {
     setMounted(true);
     return () => setMounted(false);
   }, []);
 
+  const handleEditorDidMount = (editor: any) => {
+    editorRef.current = editor;
+    editor.focus();
+
+    // Dynamically resize height based on content
+    editor.onDidContentSizeChange(() => {
+      const contentHeight =
+        editor.getContentHeight() < 200 ? 200 : editor.getContentHeight();
+      setEditorHeight(`${contentHeight}px`);
+    });
+  };
+
   if (!mounted) {
     return (
-      <div 
-        className={cn(
-          "flex items-center justify-center bg-muted", 
-          className
-        )} 
-        style={{ height }}
+      <div
+        className={cn("border rounded-md overflow-hidden", className)}
+        style={{ height: editorHeight }}
       >
         <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
@@ -49,10 +59,11 @@ export function CodeEditor({
 
   return (
     <Editor
-      height={height}
+      height={editorHeight}
       language={monacoLanguage}
       value={value}
       onChange={(value) => onChange(value || "")}
+      onMount={handleEditorDidMount}
       options={{
         minimap: { enabled: false },
         fontSize: 14,
@@ -60,15 +71,13 @@ export function CodeEditor({
         scrollBeyondLastLine: false,
         automaticLayout: true,
         tabSize: 2,
+        scrollbar: {
+          vertical: "hidden",
+          horizontal: "hidden",
+          handleMouseWheel: false,
+        },
       }}
-      onMount={(editor) => {
-        editorRef.current = editor;
-        editor.focus();
-      }}
-      className={cn(
-        "border rounded-md overflow-hidden",
-        className
-      )}
+      className={cn("border rounded-md overflow-hidden", className)}
     />
   );
 }

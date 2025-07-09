@@ -98,7 +98,7 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
         <div className="flex h-16 items-center justify-between border-b px-4">
           <div className="flex items-center gap-2">
             <FileCode className="h-6 w-6" />
-            <h2 className="font-semibold">Code Snippet</h2>
+            <h2 className="font-semibold">DevLocker</h2>
           </div>
           <Button 
             variant="ghost" 
