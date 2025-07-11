@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "code-snippet",
+=======
+  "name": "DevLocker",
+>>>>>>> 3d3c5d8d24e013aa06d0d3f2931cd3cd7a7edff5
   "private": false,
   "version": "0.0.0",
   "type": "module",
