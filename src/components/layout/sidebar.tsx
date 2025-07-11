@@ -91,19 +91,16 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
 
   return (
     <>
-      <aside className={cn(
-        "w-72 border-r bg-background",
-        className
-      )}>
+      <aside className={cn("w-72 border-r bg-background", className)}>
         <div className="flex h-16 items-center justify-between border-b px-4">
           <div className="flex items-center gap-2">
             <FileCode className="h-6 w-6" />
             <h2 className="font-semibold">DevLocker</h2>
           </div>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="md:hidden" 
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
             onClick={onClose}
           >
             <X className="h-5 w-5" />
@@ -116,7 +113,11 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
             </div>
             <div className="space-y-1">
               <Button
-                variant={isActive("/") && !filter.showFavoritesOnly ? "secondary" : "ghost"}
+                variant={
+                  isActive("/") && !filter.showFavoritesOnly
+                    ? "secondary"
+                    : "ghost"
+                }
                 className="w-full justify-start"
                 onClick={() => {
                   resetFilter();
@@ -139,13 +140,13 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
               </Button>
             </div>
           </div>
-          
+
           <div className="px-4 py-2 border-t">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium">Projects</h3>
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setProjectDialogOpen(true)}
               >
                 <Plus className="h-4 w-4" />
@@ -153,12 +154,16 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
             </div>
             <div className="space-y-1">
               {projects.length === 0 && (
-                <p className="text-sm text-muted-foreground px-2">No projects yet</p>
+                <p className="text-sm text-muted-foreground px-2">
+                  No projects yet
+                </p>
               )}
               {projects.map((project) => (
                 <Button
                   key={project.id}
-                  variant={filter.projectId === project.id ? "secondary" : "ghost"}
+                  variant={
+                    filter.projectId === project.id ? "secondary" : "ghost"
+                  }
                   className="w-full justify-start"
                   onClick={() => handleProjectClick(project.id)}
                 >
@@ -172,9 +177,9 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
           <div className="px-4 py-2 border-t">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-sm font-medium">Folders</h3>
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => {
                   setSelectedFolderId(undefined);
                   setFolderDialogOpen(true);
@@ -185,7 +190,9 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
             </div>
             <div className="space-y-1">
               {folders.length === 0 && (
-                <p className="text-sm text-muted-foreground px-2">No folders yet</p>
+                <p className="text-sm text-muted-foreground px-2">
+                  No folders yet
+                </p>
               )}
               {renderFolders(topLevelFolders)}
             </div>
@@ -197,13 +204,17 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
             </div>
             <div className="space-y-1">
               {languages.length === 0 && (
-                <p className="text-sm text-muted-foreground px-2">No languages yet</p>
+                <p className="text-sm text-muted-foreground px-2">
+                  No languages yet
+                </p>
               )}
               <div className="flex flex-wrap gap-2 pb-2">
                 {languages.map((language) => (
-                  <Badge 
+                  <Badge
                     key={language}
-                    variant={filter.language === language ? "default" : "outline"}
+                    variant={
+                      filter.language === language ? "default" : "outline"
+                    }
                     className="cursor-pointer"
                     onClick={() => handleLanguageClick(language)}
                   >
@@ -220,11 +231,13 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
             </div>
             <div className="space-y-1">
               {allTags.length === 0 && (
-                <p className="text-sm text-muted-foreground px-2">No tags yet</p>
+                <p className="text-sm text-muted-foreground px-2">
+                  No tags yet
+                </p>
               )}
               <div className="flex flex-wrap gap-2 pb-6">
                 {allTags.map((tag) => (
-                  <Badge 
+                  <Badge
                     key={tag}
                     variant={filter.tags?.includes(tag) ? "default" : "outline"}
                     className="cursor-pointer"
@@ -238,14 +251,23 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
             </div>
           </div>
         </ScrollArea>
+        <div className="px-1 absolute bottom-2 w-full h-10">
+          <a
+            target="_blank"
+            href="https://github.com/SHETER0"
+            className="text-sm text-muted-foreground px-1 text-center hover:underline"
+          >
+            Write less. Paste more. – SHETER 📋
+          </a>
+        </div>
       </aside>
 
-      <ProjectDialog 
+      <ProjectDialog
         open={projectDialogOpen}
         onOpenChange={setProjectDialogOpen}
       />
 
-      <FolderDialog 
+      <FolderDialog
         open={folderDialogOpen}
         onOpenChange={setFolderDialogOpen}
         parentFolderId={selectedFolderId}

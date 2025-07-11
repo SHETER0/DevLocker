@@ -6,14 +6,11 @@ export default function NotFoundPage() {
   
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
-      <h1 className="text-6xl font-bold">404</h1>
-      <h2 className="text-2xl font-medium mt-4 mb-6">Page Not Found</h2>
-      <p className="text-muted-foreground mb-8 text-center">
-        The page you are looking for does not exist or has been moved.
+      <h5 className="text-2xl font-bold">404 - Page Not Found</h5>
+      <p className="text-muted-foreground mb-8 text-center mt-3">
+        But we found your semicolon. ;
       </p>
-      <Button onClick={() => navigate("/")}>
-        Go Back Home
-      </Button>
+      <Button onClick={() => navigate("/")}>Go Back Home</Button>
     </div>
   );
 }

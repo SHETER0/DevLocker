@@ -25,7 +25,9 @@ export function SnippetCard({ snippet }: SnippetCardProps) {
   };
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this snippet?")) {
+    if (
+      window.confirm("Whoa there! You sure you want to erase this masterpiece?")
+    ) {
       deleteSnippet(snippet.id);
     }
   };

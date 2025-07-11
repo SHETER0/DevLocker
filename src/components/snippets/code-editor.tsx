@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { useMonaco } from "@monaco-editor/react"; // <-- Import useMonaco
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +20,7 @@ export function CodeEditor({
   const [mounted, setMounted] = useState(false);
   const [editorHeight, setEditorHeight] = useState("200px");
   const editorRef = useRef<any>(null);
+  const monaco = useMonaco(); // <-- Access Monaco instance
 
   const normalizedLanguage = language.toLowerCase();
   const monacoLanguage =
@@ -34,11 +35,26 @@ export function CodeEditor({
     return () => setMounted(false);
   }, []);
 
+  // Load GitHub Dark Theme
+  useEffect(() => {
+    if (monaco) {
+      import("monaco-themes/themes/GitHub Dark.json").then((themeData) => {
+        monaco.editor.defineTheme("github-dark", themeData as any);
+        monaco.editor.setTheme("github-dark");
+      });
+    }
+  }, [monaco]);
+
   const handleEditorDidMount = (editor: any) => {
+    if (monaco) {
+      import("monaco-themes/themes/GitHub Dark.json").then((themeData) => {
+        monaco.editor.defineTheme("github-dark", themeData as any);
+        monaco.editor.setTheme("github-dark");
+      });
+    }
     editorRef.current = editor;
     editor.focus();
 
-    // Dynamically resize height based on content
     editor.onDidContentSizeChange(() => {
       const contentHeight =
         editor.getContentHeight() < 200 ? 200 : editor.getContentHeight();
